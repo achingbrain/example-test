@@ -17,7 +17,12 @@
   },
   "homepage": "https://github.com/ajaxscape/example-test#readme",
   "devDependencies": {
-    "@bsurgison/cucumber-partner": "0.0.1",
-    "chai": "^3.4.1"
+    "@bsurgison/cucumber-partner": "0.0.5",
+    "chai": "^3.4.1",
+    "gulp-jshint": "^2.0.0",
+    "gulp-shell": "^0.5.1",
+    "gulp-task-listing": "^1.0.1",
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^2.1.0"
   }
 }

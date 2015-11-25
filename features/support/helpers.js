@@ -5,7 +5,11 @@ var request = require('superagent'),
     faker = require('faker'),
     yaml = require('js-yaml'),
     config = yaml.safeLoad(fs.readFileSync('./features/config.yml', 'utf8')),
+    cucumber_partner = require('@bsurgison/cucumber-partner'),
     auth;
+
+cucumber_partner.setConfig(config);
+cucumber_partner.setRoutes(require('../routes'));
 
 module.exports = {
 

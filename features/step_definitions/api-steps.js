@@ -2,8 +2,7 @@
 
 require('chai').should();
 
-var helpers = require('.././helpers');
-var currentUser;
+var helpers = require('../support/helpers');
 
 module.exports = function () {
 

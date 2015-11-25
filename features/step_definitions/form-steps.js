@@ -1,11 +1,12 @@
 'use strict';
 
 require('chai').should();
-var helpers = require('.././helpers');
+var cucumber_partner = require('@bsurgison/cucumber-partner');
+var helpers = require('../support/helpers');
 
 module.exports = function () {
 
-    this.World = require('.././world.js').World; // overwrite default World constructor
+    this.World = cucumber_partner.World; // overwrite default World constructor
 
     this.When(/^I am signed out$/,
         function (next) {
@@ -23,9 +24,6 @@ module.exports = function () {
                         pageObject.get('username').sendKeys(user.email);
                         pageObject.get('password').sendKeys(user.password);
                         pageObject.get('submit').click().then(next);
-                    })
-                    .catch(() => {
-                        throw new Error('Route is not defined');
                     })
                 );
         }
