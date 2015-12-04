@@ -1,5 +1,9 @@
 'use strict';
 
 module.exports = {
-    path: '/submission'
+    path: '/submission',
+    pageObject: {
+        dropzone: '#file-manager-drop-target',
+        fileInput: '.dz-hidden-input'
+    }
 };

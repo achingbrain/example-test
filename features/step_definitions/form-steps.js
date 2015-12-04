@@ -83,6 +83,14 @@ module.exports = function () {
             this.getPageObject()
                 .then((pageObject) => pageObject.get(link).click()
                     .then(() => setTimeout(next, 450))); // timeout to allow any animation
-        });
+        }
+    );
+
+    this.Then(/^I drag a word document into the dropzone$/,
+        function (next) {
+            this.getPageObject()
+                .then((pageObject) => pageObject.upload('test.docx', next));
+        }
+    );
 
 };

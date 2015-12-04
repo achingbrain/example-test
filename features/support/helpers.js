@@ -10,12 +10,9 @@ var request = require('superagent'),
 
 cucumber_partner.setConfig(config);
 cucumber_partner.setRoutes(require('../routes'));
+cucumber_partner.setPageConfig(require('./pageConfig'));
 
 module.exports = {
-
-    getHost: function () {
-        return config.host;
-    },
 
     getCurrentUser: function(){
         return {
