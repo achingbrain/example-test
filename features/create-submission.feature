@@ -13,7 +13,6 @@ Feature: Create and post a new submission feature
     Then I should eventually be on the submission new page
     Then I drag a word document into the dropzone
     And I select the manuscript option from the last file type dropdown
-    And I wait until the save notice displays "All changes saved"
     And I click continue
     And I wait for extraction to complete
     And I select manuscript in the side panel

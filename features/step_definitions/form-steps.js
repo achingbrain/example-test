@@ -91,27 +91,14 @@ module.exports = function () {
     this.Then(/^I drag a word document into the dropzone$/,
         function (next) {
             this.getPageObject()
-                .then((pageObject) => pageObject.upload('test.docx', () => setTimeout(next, 2500)));
+                .then((pageObject) => pageObject.upload('test.docx', () => setTimeout(next, 2500))); // timeout to allow any animation
         }
     );
 
     this.Then(/^I select the ([^"]*) from the ([^"]*) dropdown$/,
         function (filetype, dropdown, next) {
             this.getPageObject()
-                .then((pageObject) => pageObject.get(filetype).click().then(next));
-        }
-    );
-
-    this.Then(/^I wait until the save notice displays "([^"]*)"$/,
-        function (message, next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.expectPageToContain('notification', () => pageObject.get('notification').getText()
-                        .then((notification) => {
-                            notification.should.equal(message);
-                            next();
-                        })
-                    )
-                );
+                .then((pageObject) => pageObject.get(dropdown + filetype).click().then(next));
         }
     );
 
