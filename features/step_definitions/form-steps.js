@@ -8,6 +8,8 @@ module.exports = function () {
 
     this.World = cucumber_partner.World; // overwrite default World constructor
 
+    this.setDefaultTimeout(60 * 1000);
+
     this.When(/^I am signed out$/,
         function (next) {
             this.visit('signOut')
@@ -89,7 +91,27 @@ module.exports = function () {
     this.Then(/^I drag a word document into the dropzone$/,
         function (next) {
             this.getPageObject()
-                .then((pageObject) => pageObject.upload('test.docx', next));
+                .then((pageObject) => pageObject.upload('test.docx', () => setTimeout(next, 2500)));
+        }
+    );
+
+    this.Then(/^I select the ([^"]*) from the ([^"]*) dropdown$/,
+        function (filetype, dropdown, next) {
+            this.getPageObject()
+                .then((pageObject) => pageObject.get(filetype).click().then(next));
+        }
+    );
+
+    this.Then(/^I wait until the save notice displays "([^"]*)"$/,
+        function (message, next) {
+            this.getPageObject()
+                .then((pageObject) => pageObject.expectPageToContain('notification', () => pageObject.get('notification').getText()
+                        .then((notification) => {
+                            notification.should.equal(message);
+                            next();
+                        })
+                    )
+                );
         }
     );
 
