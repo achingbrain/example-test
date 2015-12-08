@@ -22,9 +22,7 @@ module.exports = function () {
             var user = helpers.getCurrentUser();
             this.pageObject.get('username').sendKeys(user.email);
             this.pageObject.get('password').sendKeys(user.password);
-
-            return this.pageObject.get('submit')
-                .click()
+            return this.pageObject.get('submit').click()
         })
     });
 
@@ -33,12 +31,7 @@ module.exports = function () {
     });
 
     this.Then(/^I should eventually be on the (.*) page$/, function (page) {
-        console.log(object.should)
-            var expectedRoute = this.getRoute(page);
-        route.should.be.ok;
-
-        //this.pageObject.route.path.should.deep.equal(route.path);
-        this.pageObject.route.path.should.equal(expectedRoute.path);
+        return this.pageObject.expectPageToEventuallyBe(page);
     });
 
     this.Then(/^I expect the page to not contain the (.*)$/, function (id) {
