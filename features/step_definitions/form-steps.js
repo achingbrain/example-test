@@ -10,96 +10,66 @@ module.exports = function () {
 
     this.setDefaultTimeout(60 * 1000);
 
-    this.When(/^I am signed out$/,
-        function (next) {
-            this.visit('signOut')
-                .then(next);
-        }
-    );
+    this.When(/^I am signed out$/, function () {
+        return this.visit('signOut')
+    });
 
-    this.When(/^I am signed in$/,
-        function (next) {
-            this.visit('signOut') // will redirect to sign-in
-                .then(() => this.getPageObject()
-                    .then((pageObject) => {
-                        var user = helpers.getCurrentUser();
-                        pageObject.get('username').sendKeys(user.email);
-                        pageObject.get('password').sendKeys(user.password);
-                        pageObject.get('submit').click().then(next);
-                    })
-                );
-        }
-    );
+    this.When(/^I am signed in$/, {timeout: 10000}, function () {
+        return this.visit('signOut').then(() => {
+            /* will redirect to sign-in */
+            this.pageObject.route.path.should.equal('/sign-in');
 
-    this.When(/^I visit the (.*) page$/,
-        function (page, next) {
-            this.visit(page)
-                .then(next);
-        }
-    );
+            var user = helpers.getCurrentUser();
+            this.pageObject.get('username').sendKeys(user.email);
+            this.pageObject.get('password').sendKeys(user.password);
 
-    this.Then(/^I should eventually be on the (.*) page$/,
-        function (page, next) {
-            var route = this.getRoute(page);
-            if (!route) {
-                throw new Error('Route is not defined for "' + page + '" page');
-            }
-            this.getPageObject()
-                .then((pageObject) => {
-                    pageObject.route.should.equal(route);
-                    next();
-                });
-        }
-    );
+            return this.pageObject.get('submit')
+                .click()
+        })
+    });
 
-    this.Then(/^I expect the page to not contain the (.*)$/,
-        function (id, next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.expectPageToNotContain(id, next));
-        }
-    );
+    this.When(/^I visit the (.*) page$/, function (page) {
+        return this.visit(page)
+    });
 
-    this.Then(/^I expect the page to contain the (.*)$/,
-        function (id, next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.expectPageToContain(id, next));
-        }
-    );
+    this.Then(/^I should eventually be on the (.*) page$/, function (page) {
+        console.log(object.should)
+            var expectedRoute = this.getRoute(page);
+        route.should.be.ok;
 
-    this.When(/^I am using a mobile/,
-        function (next) {
-            this.setSize(480, 320);
-            next();
-        }
-    );
+        //this.pageObject.route.path.should.deep.equal(route.path);
+        this.pageObject.route.path.should.equal(expectedRoute.path);
+    });
 
-    this.When(/^I am using a desktop$/,
-        function (next) {
-            this.setSize(1024, 768);
-            next();
-        }
-    );
+    this.Then(/^I expect the page to not contain the (.*)$/, function (id) {
+        return this.pageObject.expectPageToNotContain(id);
+    });
 
-    this.When(/^I click (.*)$/,
-        function (link, next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.get(link).click()
-                    .then(() => setTimeout(next, 450))); // timeout to allow any animation
-        }
-    );
+    this.Then(/^I expect the page to contain the (.*)$/, function (id) {
+        return this.pageObject.expectPageToContain(id);
+    });
 
-    this.Then(/^I drag a word document into the dropzone$/,
-        function (next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.upload('test.docx', () => setTimeout(next, 2500))); // timeout to allow any animation
-        }
-    );
+    this.When(/^I am using a mobile/, function () {
+        return this.setSize(480, 320);
+    });
 
-    this.Then(/^I select the ([^"]*) from the ([^"]*) dropdown$/,
-        function (filetype, dropdown, next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.get(dropdown + filetype).click().then(next));
-        }
-    );
+    this.When(/^I am using a desktop$/, function (next) {
+        return this.setSize(1024, 768);
+    });
+
+    this.When(/^I click (.*)$/, function (link, next) {
+        this.pageObject
+            .get(link)
+            .click()
+            .then(() => setTimeout(next, 850)); // timeout to allow any animation
+    });
+
+    this.Then(/^I drag a word document into the dropzone$/, function (next) {
+        this.pageObject.upload('test.docx', next);
+    });
+
+    this.When(/^I select a word document into the dropzone$/, function (next) {
+        this.pageObject.get('xxx').value = xxx;
+    });
 
 };
