@@ -2,6 +2,7 @@
 
 require('chai').should();
 var cucumber_partner = require('@bsurgison/cucumber-partner');
+var until = require('selenium-webdriver').until;
 var helpers = require('../support/helpers');
 
 module.exports = function () {
@@ -44,25 +45,19 @@ module.exports = function () {
             if (!route) {
                 throw new Error('Route is not defined for "' + page + '" page');
             }
-            this.getPageObject()
-                .then((pageObject) => {
-                    pageObject.route.should.equal(route);
-                    next();
-                });
+            this.driver.wait(() => new until.Condition('matching page', () => this.currentPage.route === route), 100).then(() => next());
         }
     );
 
     this.Then(/^I expect the page to not contain the (.*)$/,
         function (id, next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.expectPageToNotContain(id, next));
+            this.currentPage.expectPageToNotContain(id, next);
         }
     );
 
     this.Then(/^I expect the page to contain the (.*)$/,
         function (id, next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.expectPageToContain(id, next));
+            this.currentPage.expectPageToContain(id, next);
         }
     );
 
@@ -82,30 +77,26 @@ module.exports = function () {
 
     this.When(/^I click (.*)$/,
         function (link, next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.get(link).click()
-                    .then(() => setTimeout(next, 450))); // timeout to allow any animation
+            this.currentPage.get(link).click()
+                    .then(() => setTimeout(next, 450)); // timeout to allow any animation
         }
     );
 
     this.Then(/^I drag a word document into the dropzone$/,
         function (next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.upload('test.docx', () => setTimeout(next, 2500))); // timeout to allow any animation
+            this.currentPage.upload('test.docx', () => setTimeout(next, 2500)); // timeout to allow any animation
         }
     );
 
     this.Then(/^I select the ([^"]*) option$/,
         function (filetype, next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.get(filetype + 'Option').click().then(next));
+            this.currentPage.get(filetype + 'Option').click().then(next);
         }
     );
 
     this.Then(/^I select ([^"]*) in the side panel/,
         function (menuLink, next) {
-            this.getPageObject()
-                .then((pageObject) => pageObject.get(menuLink).click().then(() => setTimeout(next, 5000)));
+            this.currentPage.get(menuLink).click().then(() => setTimeout(next, 5000));
         }
     );
 
