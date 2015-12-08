@@ -95,10 +95,17 @@ module.exports = function () {
         }
     );
 
-    this.Then(/^I select the ([^"]*) from the ([^"]*) dropdown$/,
-        function (filetype, dropdown, next) {
+    this.Then(/^I select the ([^"]*) option$/,
+        function (filetype, next) {
             this.getPageObject()
-                .then((pageObject) => pageObject.get(dropdown + filetype).click().then(next));
+                .then((pageObject) => pageObject.get(filetype + 'Option').click().then(next));
+        }
+    );
+
+    this.Then(/^I select ([^"]*) in the side panel/,
+        function (menuLink, next) {
+            this.getPageObject()
+                .then((pageObject) => pageObject.get(menuLink).click().then(() => setTimeout(next, 5000)));
         }
     );
 

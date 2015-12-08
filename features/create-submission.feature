@@ -12,9 +12,9 @@ Feature: Create and post a new submission feature
     And I click submit new paper
     Then I should eventually be on the submission new page
     Then I drag a word document into the dropzone
-    And I select the manuscript option from the last file type dropdown
+    And I select the manuscript option
     And I click continue
-    And I wait for extraction to complete
+#    And I wait for extraction to complete
     And I select manuscript in the side panel
     Then I expect the title not to be empty
     And I expect the abstract not to be empty

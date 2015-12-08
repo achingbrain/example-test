@@ -6,7 +6,8 @@ module.exports = {
         notification: '.notification',
         dropzone: '#file-manager-drop-target',
         fileInput: '.dz-hidden-input',
-        manuscriptOption: '.files-container .list li:last-of-type select option[value="3136"]',
-        continue: '#floating-bar button'
+        manuscriptOption: '.files-container .file-list-item:last-of-type option[value="3136"]',
+        continue: '#floating-bar button',
+        manuscript: '.manuscript-nav a'
     }
 };
