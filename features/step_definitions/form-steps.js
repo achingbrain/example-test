@@ -2,7 +2,6 @@
 
 require('chai').should();
 var cucumber_partner = require('@bsurgison/cucumber-partner');
-var until = require('selenium-webdriver').until;
 var helpers = require('../support/helpers');
 
 module.exports = function () {
@@ -11,41 +10,28 @@ module.exports = function () {
 
     this.setDefaultTimeout(60 * 1000);
 
-    this.When(/^I am signed out$/,
-        function (next) {
-            this.visit('signOut')
-                .then(next);
-        }
-    );
-
     this.When(/^I am signed in$/,
         function (next) {
             this.visit('signOut') // will redirect to sign-in
-                .then(() => this.getPageObject()
-                    .then((pageObject) => {
-                        var user = helpers.getCurrentUser();
-                        pageObject.get('username').sendKeys(user.email);
-                        pageObject.get('password').sendKeys(user.password);
-                        pageObject.get('submit').click().then(next);
-                    })
-                );
+                .then(() => {
+                    var user = helpers.getCurrentUser();
+                        this.currentPage.get('username').sendKeys(user.email);
+                        this.currentPage.get('password').sendKeys(user.password);
+                        this.currentPage.get('submit').click().then(next);
+                    });
         }
     );
 
     this.When(/^I visit the (.*) page$/,
         function (page, next) {
             this.visit(page)
-                .then(next);
+                .then(() => next());
         }
     );
 
     this.Then(/^I should eventually be on the (.*) page$/,
         function (page, next) {
-            var route = this.getRoute(page);
-            if (!route) {
-                throw new Error('Route is not defined for "' + page + '" page');
-            }
-            this.driver.wait(() => new until.Condition('matching page', () => this.currentPage.route === route), 100).then(() => next());
+            this.currentPage.expectPageToEventuallyBe(page, next);
         }
     );
 
@@ -78,7 +64,7 @@ module.exports = function () {
     this.When(/^I click (.*)$/,
         function (link, next) {
             this.currentPage.get(link).click()
-                    .then(() => setTimeout(next, 450)); // timeout to allow any animation
+                .then(() => setTimeout(next, 450)); // timeout to allow any animation
         }
     );
 
