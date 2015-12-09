@@ -15,10 +15,10 @@ module.exports = function () {
             this.visit('signOut') // will redirect to sign-in
                 .then(() => {
                     var user = helpers.getCurrentUser();
-                        this.currentPage.get('username').sendKeys(user.email);
-                        this.currentPage.get('password').sendKeys(user.password);
-                        this.currentPage.get('submit').click().then(next);
-                    });
+                    this.currentPage.get('username').sendKeys(user.email);
+                    this.currentPage.get('password').sendKeys(user.password);
+                    this.currentPage.get('submit').click().then(next);
+                });
         }
     );
 
@@ -62,9 +62,10 @@ module.exports = function () {
     );
 
     this.When(/^I click (.*)$/,
-        function (link, next) {
-            this.currentPage.get(link).click()
-                .then(() => setTimeout(next, 450)); // timeout to allow any animation
+        function (id, next) {
+            this.currentPage.untilVisible(id)
+                .then((el) => el.click()
+                    .then(() => setTimeout(next, 450))); // timeout to allow any animation
         }
     );
 
@@ -76,13 +77,17 @@ module.exports = function () {
 
     this.Then(/^I select the ([^"]*) option$/,
         function (filetype, next) {
-            this.currentPage.get(filetype + 'Option').click().then(next);
+            this.currentPage.untilVisible(filetype + 'Option')
+                .then((el) => el.click()
+                    .then(next));
         }
     );
 
     this.Then(/^I select ([^"]*) in the side panel/,
         function (menuLink, next) {
-            this.currentPage.get(menuLink).click().then(() => setTimeout(next, 5000));
+            this.currentPage.untilVisible(menuLink)
+                .then((el) => el.click()
+                    .then(next));
         }
     );
 
