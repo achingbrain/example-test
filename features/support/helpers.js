@@ -6,6 +6,7 @@ var request = require('superagent'),
     yaml = require('js-yaml'),
     config = yaml.safeLoad(fs.readFileSync('./features/config.yml', 'utf8')),
     cucumber_partner = require('@bsurgison/cucumber-partner'),
+    path = require('path'),
     auth;
 
 cucumber_partner.setConfig(config);
@@ -13,6 +14,20 @@ cucumber_partner.setRoutes(require('../routes'));
 cucumber_partner.setPageConfig(require('./pageConfig'));
 
 module.exports = {
+
+    upload: function(file, id){
+        var world = cucumber_partner.getCurrentWorld();
+        var filePath = path.resolve(__dirname, '../files/' + file);
+        return new Promise(function (resolve) {
+            world.currentPage.get(id, (fileInput) =>
+                world.driver.executeScript((el) => {
+                        el.style.visibility = 'visible';
+                        el.style.width = '1px';
+                        el.style.height = '1px';
+                    }, fileInput)
+                    .then(() => fileInput.sendKeys(filePath).then(resolve)));
+        });
+    },
 
     getCurrentUser: function(){
         return {

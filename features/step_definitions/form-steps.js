@@ -71,7 +71,7 @@ module.exports = function () {
 
     this.Then(/^I drag a word document into the dropzone$/,
         function (next) {
-            this.currentPage.upload('test.docx', () => setTimeout(next, 2500)); // timeout to allow any animation
+            helpers.upload('test.docx', 'fileInput').then(() => setTimeout(next, 3000)); // timeout to allow any animation
         }
     );
 
