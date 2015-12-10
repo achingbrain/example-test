@@ -19,6 +19,7 @@
   "devDependencies": {
     "@bsurgison/cucumber-partner": "0.0.19",
     "chai": "^3.4.1",
+    "gulp": "^3.9.0",
     "gulp-jshint": "^2.0.0",
     "gulp-shell": "^0.5.1",
     "gulp-task-listing": "^1.0.1",
