@@ -16,6 +16,7 @@ Feature: Create and post a new submission feature
     And I click continue
 #    And I wait for extraction to complete
     And I select manuscript in the side panel
+    And I type "abcd" into the references
     Then I expect the title not to be empty
     And I expect the abstract not to be empty
     When I select authors in the side panel

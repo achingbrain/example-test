@@ -17,7 +17,7 @@ module.exports = function () {
                     var user = helpers.getCurrentUser();
                     this.sendKeys('username', user.email)
                         .then(() => this.sendKeys('password', user.password)
-                        .then(() => this.click('submit').then(next)));
+                            .then(() => this.click('submit').then(next)));
                 });
         }
     );
@@ -75,6 +75,13 @@ module.exports = function () {
         function (menuLink, next) {
             this.click(menuLink)
                 .then(next);
+        }
+    );
+
+    this.When(/^I type "(.*)" into the (.*)$/,
+        function (text, id, next) {
+            this.sendKeys(id, text)
+                .then(next)
         }
     );
 
