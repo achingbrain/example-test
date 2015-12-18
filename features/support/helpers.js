@@ -19,7 +19,7 @@ module.exports = {
         var world = cucumber_partner.getCurrentWorld();
         var filePath = path.resolve(__dirname, '../files/' + file);
         return new Promise(function (resolve) {
-            world.currentPage.get(id, (fileInput) =>
+            world.find(id).then(fileInput =>
                 world.driver.executeScript((el) => {
                         el.style.visibility = 'visible';
                         el.style.width = '1px';

@@ -15,9 +15,9 @@ module.exports = function () {
             this.visit('signOut') // will redirect to sign-in
                 .then(() => {
                     var user = helpers.getCurrentUser();
-                    this.currentPage.get('username').sendKeys(user.email);
-                    this.currentPage.get('password').sendKeys(user.password);
-                    this.currentPage.get('submit').click().then(next);
+                    this.sendKeys('username', user.email);
+                    this.sendKeys('password', user.password);
+                    this.click('submit').then(next);
                 });
         }
     );
@@ -31,19 +31,8 @@ module.exports = function () {
 
     this.Then(/^I should eventually be on the (.*) page$/,
         function (page, next) {
-            this.currentPage.expectPageToEventuallyBe(page, next);
-        }
-    );
-
-    this.Then(/^I expect the page to not contain the (.*)$/,
-        function (id, next) {
-            this.currentPage.expectPageToNotContain(id, next);
-        }
-    );
-
-    this.Then(/^I expect the page to contain the (.*)$/,
-        function (id, next) {
-            this.currentPage.expectPageToContain(id, next);
+            this.waitForPage(page, 10000)
+                .then(next)
         }
     );
 
@@ -63,31 +52,29 @@ module.exports = function () {
 
     this.When(/^I click (.*)$/,
         function (id, next) {
-            this.currentPage.untilVisible(id)
-                .then((el) => el.click()
-                    .then(() => setTimeout(next, 450))); // timeout to allow any animation
+            this.click(id)
+                .then(next);
         }
     );
 
     this.Then(/^I drag a word document into the dropzone$/,
         function (next) {
-            helpers.upload('test.docx', 'fileInput').then(() => setTimeout(next, 3000)); // timeout to allow any animation
+            helpers.upload('test.docx', 'fileInput')
+                .then(next);
         }
     );
 
     this.Then(/^I select the ([^"]*) option$/,
         function (filetype, next) {
-            this.currentPage.untilVisible(filetype + 'Option')
-                .then((el) => el.click()
-                    .then(next));
+            this.click(filetype + 'Option')
+                .then(next);
         }
     );
 
     this.Then(/^I select ([^"]*) in the side panel/,
         function (menuLink, next) {
-            this.currentPage.untilVisible(menuLink)
-                .then((el) => el.click()
-                    .then(next));
+            this.click(menuLink)
+                .then(next);
         }
     );
 
