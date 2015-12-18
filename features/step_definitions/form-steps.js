@@ -15,9 +15,9 @@ module.exports = function () {
             this.visit('signOut') // will redirect to sign-in
                 .then(() => {
                     var user = helpers.getCurrentUser();
-                    this.sendKeys('username', user.email);
-                    this.sendKeys('password', user.password);
-                    this.click('submit').then(next);
+                    this.sendKeys('username', user.email)
+                        .then(() => this.sendKeys('password', user.password)
+                        .then(() => this.click('submit').then(next)));
                 });
         }
     );
