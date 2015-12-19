@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ajaxscape/example-test#readme",
   "devDependencies": {
     "@bsurgison/cucumber-partner": "0.0.19",
+    "bluebird": "^3.1.1",
     "chai": "^3.4.1",
     "gulp": "^3.9.0",
     "gulp-jshint": "^2.0.0",

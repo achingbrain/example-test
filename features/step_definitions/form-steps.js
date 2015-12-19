@@ -1,6 +1,7 @@
 'use strict';
 
 require('chai').should();
+var Promise = require('bluebird');
 var cucumber_partner = require('@bsurgison/cucumber-partner');
 var helpers = require('../support/helpers');
 
@@ -12,20 +13,20 @@ module.exports = function () {
 
     this.When(/^I am signed in$/,
         function (next) {
+            var user = helpers.getCurrentUser();
             this.visit('signOut') // will redirect to sign-in
-                .then(() => {
-                    var user = helpers.getCurrentUser();
-                    this.sendKeys('username', user.email)
-                        .then(() => this.sendKeys('password', user.password)
-                            .then(() => this.click('submit').then(next)));
-                });
+                .then(() => Promise.all([
+                    this.sendKeys('username', user.email),
+                    this.sendKeys('password', user.password)]))
+                .then(() => this.click('submit'))
+                .then(next)
         }
     );
 
     this.When(/^I visit the (.*) page$/,
         function (page, next) {
             this.visit(page)
-                .then(() => next());
+                .then(next);
         }
     );
 
@@ -85,4 +86,5 @@ module.exports = function () {
         }
     );
 
-};
+}
+;
