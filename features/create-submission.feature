@@ -16,9 +16,10 @@ Feature: Create and post a new submission feature
     And I click continue
 #    And I wait for extraction to complete
     And I select manuscript in the side panel
-    And I type "abcd" into the references
-    Then I expect the title not to be empty
-    And I expect the abstract not to be empty
+    Then I expect the title to be entered
+    And I expect the abstract to be entered
+    And I expect the references to be empty
+    When I type "abcd" into the references
     When I select authors in the side panel
     Then I expect to see myself as the corresponding author
     And I expect to see additional co-authors in the author list
