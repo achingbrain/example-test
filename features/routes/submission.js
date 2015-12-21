@@ -9,6 +9,6 @@ module.exports = {
         manuscriptOption: '.files-container .file-list-item:last-of-type option[value="3136"]',
         continue: '#floating-bar button',
         manuscript: '.manuscript-nav a',
-        references: 'input[name="references"]'
+        references: '[name="references"]'
     }
 };
