@@ -26,7 +26,7 @@ module.exports = function () {
     });
 
     this.Then(/^I should eventually be on the (.*) page$/, function (page, next) {
-        this.waitForPage(page, 10000)
+        this.whenPageIs(page, 10000)
             .then(next);
     });
 
