@@ -13,7 +13,7 @@ module.exports = function () {
 
     this.World = cucumber_partner.World; // overwrite default World constructor
 
-    this.setDefaultTimeout(60 * 1000);
+    this.setDefaultTimeout(3600000);
 
     this.When(/^I am signed in$/, function (next) {
         var user = helpers.getCurrentUser();
@@ -91,6 +91,20 @@ module.exports = function () {
                 next();
             })
             .catch(next)
+    });
+
+    this.Then(/^I expect the (.*) to equal "(.*)"$/, function (id, expectedVal, next) {
+        this.getVal(id)
+            .then(val => {
+                expect(val + '').to.equal(expectedVal);
+                next();
+            })
+            .catch(next)
+    });
+
+    this.Then(/^I expect the (.*) to exist$/, function (id, next) {
+        this.find(id)
+            .then(() => next())
     });
 
 };

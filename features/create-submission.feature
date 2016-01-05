@@ -11,14 +11,18 @@ Feature: Create and post a new submission feature
     When I visit the submission list page
     And I click submit new paper
     Then I should eventually be on the submission new page
-    Then I drag a word document into the dropzone
-    And I select the manuscript option
+    When I click file help
+    When I drag a word document into the dropzone
+    Then I expect the file list item to exist
+    When I select the manuscript option
+    Then I expect the file option to equal "3136"
     And I click continue
     And I select manuscript in the side panel
     Then I expect the title to be entered
     And I expect the abstract to be entered
     And I expect the references to be empty
     When I type "abcd" into the references
+    Then I expect the references to equal "abcd"
     When I select authors in the side panel
     Then I expect to see myself as the corresponding author
     And I expect to see additional co-authors in the author list
