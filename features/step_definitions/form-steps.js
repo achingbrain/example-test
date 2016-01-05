@@ -3,7 +3,7 @@
 var chai = require('chai');
 var chaiAsPromised = require("chai-as-promised");
 var Promise = require('bluebird');
-var cucumber_partner = require('@bsurgison/cucumber-partner');
+var cucumber_partner = require('cucumber-partner');
 var helpers = require('../support/helpers');
 var expect = chai.expect;
 

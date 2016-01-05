@@ -5,7 +5,7 @@ var request = require('superagent'),
     faker = require('faker'),
     yaml = require('js-yaml'),
     config = yaml.safeLoad(fs.readFileSync('./features/config.yml', 'utf8')),
-    cucumber_partner = require('@bsurgison/cucumber-partner'),
+    cucumber_partner = require('cucumber-partner'),
     path = require('path'),
     auth;
 
