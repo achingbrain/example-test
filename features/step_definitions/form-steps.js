@@ -1,9 +1,13 @@
 'use strict';
 
-var expect = require('chai').expect;
+var chai = require('chai');
+var chaiAsPromised = require("chai-as-promised");
 var Promise = require('bluebird');
 var cucumber_partner = require('@bsurgison/cucumber-partner');
 var helpers = require('../support/helpers');
+var expect = chai.expect;
+
+chai.use(chaiAsPromised);
 
 module.exports = function () {
 

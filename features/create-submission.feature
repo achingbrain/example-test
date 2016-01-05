@@ -14,7 +14,6 @@ Feature: Create and post a new submission feature
     Then I drag a word document into the dropzone
     And I select the manuscript option
     And I click continue
-#    And I wait for extraction to complete
     And I select manuscript in the side panel
     Then I expect the title to be entered
     And I expect the abstract to be entered
