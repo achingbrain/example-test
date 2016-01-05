@@ -107,4 +107,9 @@ module.exports = function () {
             .then(() => next())
     });
 
+    this.Then(/^I expect the (.*) to be visible/, function (id, next) {
+        this.whenVisible(id)
+            .then(() => next())
+    });
+
 };

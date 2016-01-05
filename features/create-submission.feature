@@ -12,8 +12,9 @@ Feature: Create and post a new submission feature
     And I click submit new paper
     Then I should eventually be on the submission new page
     When I click file help
+    Then I expect the file help dialog to be visible
     When I drag a word document into the dropzone
-    Then I expect the file list item to exist
+    Then I expect the file list item to be visible
     When I select the manuscript option
     Then I expect the file option to equal "3136"
     And I click continue
